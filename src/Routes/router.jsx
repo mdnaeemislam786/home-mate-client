@@ -8,6 +8,8 @@ import MyBookings from "../Pages/MyBookings";
 import Profile from "../Pages/Profile";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../Components/Auth/Login";
+import Register from "../Components/Auth/Register";
+import Forgot from "../Components/Auth/Forgot";
 
 export const router = createBrowserRouter([
     {
@@ -47,12 +49,12 @@ export const router = createBrowserRouter([
                         element: <Login/>
                     },
                     {
-                        path: '/auth/signup',
-                        element: <Login/>
+                        path: '/auth/register',
+                        element: <Register/>
                     },
                     {
                         path: '/auth/forgot',
-                        element: <Login/>
+                        element: <Forgot/>
                     },
                 ]
             },

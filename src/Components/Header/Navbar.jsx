@@ -2,7 +2,7 @@
 import { Link, useLocation } from 'react-router';
 
     const Navbar = () => {
-    const user = true
+    const user = false
     const location = useLocation();
     const links = <>
     <li><Link to="/" >Home</Link></li>
@@ -58,7 +58,7 @@ import { Link, useLocation } from 'react-router';
             alt="Logo" 
             className="w-8 h-8 mr-2"
           />
-          YourBrand
+          HomeMate
         </Link>
       </div>
 
@@ -108,10 +108,10 @@ import { Link, useLocation } from 'react-router';
         ) : (
           // User is not logged in - Show login/register buttons
           <div className="flex gap-2">
-            <Link to="/login" className="btn btn-primary btn-sm">
+            <Link to="/auth" className="btn btn-primary btn-sm">
               Login
             </Link>
-            <Link to="/register" className="btn btn-outline btn-sm">
+            <Link to="/auth/signup" className="btn btn-outline btn-sm">
               Register
             </Link>
           </div>
