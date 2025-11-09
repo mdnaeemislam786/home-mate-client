@@ -1,26 +1,36 @@
 // import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { Link, useLocation } from 'react-router';
+import { AuthContext } from '../../Context/AuthContext';
 
     const Navbar = () => {
-    const user = false
-    const location = useLocation();
-    const links = <>
-    <li><Link to="/" >Home</Link></li>
-    <li><Link to="/services" className=''>Services</Link></li>
-    
-    {user && (
-        <>
-        <li><Link to="/my-services" className="">My Services</Link></li>
-        <li><Link to="/add-service" className="">Add Service</Link></li>
-        <li><Link to="/my-bookings" className="">My Bookings</Link></li>
-        </>
-    )}
-    </>
+      const {user, logoutUser} = useContext(AuthContext)
+
+      // const user = false
+      const location = useLocation();
+      const links = <>
+      <li><Link to="/" >Home</Link></li>
+      <li><Link to="/services" className=''>Services</Link></li>
+      
+      {user && (
+          <>
+          <li><Link to="/my-services" className="">My Services</Link></li>
+          <li><Link to="/add-service" className="">Add Service</Link></li>
+          <li><Link to="/my-bookings" className="">My Bookings</Link></li>
+          </>
+      )}
+      </>
 
 
 
     const handleLogout = () => {
-    localStorage.removeItem('user');
+    logoutUser()
+    .then(() => {
+      alert('SignOut successfull')
+    })
+    .catch((err) => {
+      console.log(err);
+    })
     };
 
   return (
@@ -84,10 +94,10 @@ import { Link, useLocation } from 'react-router';
           // User is logged in - Show profile dropdown
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
+              <div className="w-10 border border-blue-500 rounded-full">
                 <img
                   alt="Profile"
-                  src={user.avatar || '/default-avatar.png'}
+                  src={user.photoURL || '/default-avatar.png'}
                 />
               </div>
             </div>

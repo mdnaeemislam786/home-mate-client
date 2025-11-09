@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const {userLogin , googleSignIn } = useContext(AuthContext)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,12 +32,26 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isFormValid) {
-      alert("Login successful! Welcome back.");
-      // Handle login logic here
-    }
+    const email = formData.email
+    const password = formData.password
+    // console.log(email, password);
+    userLogin(email, password)
+    .then(() => {
+      alert('Login Successfull!')
+      navigate('/')
+    })
+    .catch(err => console.log(err))
   };
+  //google signin
+  const handleGoogleSignIn = () =>{
+    googleSignIn() 
+    .then(() =>
+      alert("Account created successfully!")
+    
+    )
+    .catch((err) => alert(err))
 
+  }
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
   const isPasswordValid = formData.password.length >= 6;
@@ -144,7 +161,9 @@ const Login = () => {
 
               {/* Social Login */}
               <div className="flex justify-center">
-                <button className="flex items-center justify-center gap-3 bg-white text-gray-700 w-full py-4 rounded-2xl border-2 border-gray-200 hover:border-blue-300 hover:shadow-md transition-all">
+                <button
+                onClick={handleGoogleSignIn}
+                className="flex items-center justify-center gap-3 bg-white text-gray-700 w-full py-4 rounded-2xl border-2 border-gray-200 hover:border-blue-300 hover:shadow-md transition-all">
                   <svg
                     aria-label="Google logo"
                     width="20"

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser , googleSignIn } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -76,7 +76,19 @@ const Register = () => {
       alert("Account created successfully!")
     )
     .catch((err) => alert(err))
+
   };
+
+  //google signin
+  const handleGoogleSignIn = () =>{
+    googleSignIn() 
+    .then(() =>
+      alert("Account created successfully!")
+    
+    )
+    .catch((err) => alert(err))
+
+  }
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
   const isPhotoURLValid = formData.photoURL.length > 0;
@@ -270,7 +282,9 @@ const Register = () => {
                   Or sign up with
                 </span>
                 <div className="flex justify-center mt-3">
-                  <button className="flex items-center justify-center gap-2 bg-white text-gray-700 w-full py-4 rounded-2xl border-2 border-gray-200 hover:border-blue-300 hover:shadow-md transition-all">
+                  <button
+                    onClick={handleGoogleSignIn}
+                    className="flex items-center justify-center gap-2 bg-white text-gray-700 w-full py-4 rounded-2xl border-2 border-gray-200 hover:border-blue-300 hover:shadow-md transition-all">
                     <svg
                       aria-label="Google logo"
                       width="20"

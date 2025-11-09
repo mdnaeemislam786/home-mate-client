@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Forgot = () => {
+  const {forgotPassword} = useContext(AuthContext)
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -22,9 +24,15 @@ const Forgot = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isEmailValid) return;
-
     setIsLoading(true);
     
+    const email = formData.email;
+    // console.log(email);
+    forgotPassword(email)
+    .then(() => {
+      alert('Please check your email')
+    })
+    .catch(err => console.log(err))
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
