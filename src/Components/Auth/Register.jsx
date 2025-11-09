@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -63,10 +65,17 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isFormValid) {
-      alert("Registration successful! Welcome to our site.");
-      // Handle registration logic here
-    }
+    const email = formData.email;
+    const password = formData.password;
+    const photoURL = formData.photoURL;
+    const displayName = formData.firstName + formData.lastName;
+
+    console.log(email, password, photoURL, displayName);
+    createUser(email, password, photoURL, displayName)
+    .then(() =>
+      alert("Account created successfully!")
+    )
+    .catch((err) => alert(err))
   };
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);

@@ -111,7 +111,7 @@ import { Link, useLocation } from 'react-router';
             <Link to="/auth" className="btn btn-primary btn-sm">
               Login
             </Link>
-            <Link to="/auth/signup" className="btn btn-outline btn-sm">
+            <Link to="/auth/register" className="btn btn-outline btn-sm">
               Register
             </Link>
           </div>
