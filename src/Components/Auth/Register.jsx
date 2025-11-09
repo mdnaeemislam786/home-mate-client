@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { createUser , googleSignIn } = useContext(AuthContext);
@@ -73,9 +74,9 @@ const Register = () => {
     console.log(email, password, photoURL, displayName);
     createUser(email, password, photoURL, displayName)
     .then(() =>
-      alert("Account created successfully!")
+      toast.success("Account created successfully!")
     )
-    .catch((err) => alert(err))
+    .catch((err) => toast.error(err))
 
   };
 
@@ -83,10 +84,10 @@ const Register = () => {
   const handleGoogleSignIn = () =>{
     googleSignIn() 
     .then(() =>
-      alert("Account created successfully!")
+      toast.success("Account created successfully!")
     
     )
-    .catch((err) => alert(err))
+    .catch((err) => toast.error(err))
 
   }
 

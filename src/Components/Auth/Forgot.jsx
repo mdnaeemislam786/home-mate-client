@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
+import { toast } from "react-toastify";
 
 const Forgot = () => {
   const {forgotPassword} = useContext(AuthContext)
@@ -30,9 +31,9 @@ const Forgot = () => {
     // console.log(email);
     forgotPassword(email)
     .then(() => {
-      alert('Please check your email')
+      toast.success('Please check your email')
     })
-    .catch(err => console.log(err))
+    .catch(err => toast.error(err))
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);

@@ -28,6 +28,16 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    // Update profile.
+    const updateNamePhoto = async(editedUser) => {
+        setLoading(true);
+        try {
+            await updateProfile(auth.currentUser, editedUser)
+        }finally{
+            setLoading(false)
+        }
+    }
+
     // login user
     const userLogin = async (email, password) => {
         setLoading(true);
@@ -37,7 +47,7 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
         }
     }
-
+    
     // forgot password email
     const forgotPassword = async (email) => {
         setLoading(true);
@@ -80,6 +90,7 @@ const AuthProvider = ({ children }) => {
             user,
             loading,
             createUser,
+            updateNamePhoto,
             userLogin,
             forgotPassword,
             googleSignIn,

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -37,19 +38,19 @@ const Login = () => {
     // console.log(email, password);
     userLogin(email, password)
     .then(() => {
-      alert('Login Successfull!')
+      toast.success('Login Successfull!')
       navigate('/')
     })
-    .catch(err => console.log(err))
+    .catch(err => toast.error(err))
   };
   //google signin
   const handleGoogleSignIn = () =>{
     googleSignIn() 
     .then(() =>
-      alert("Account created successfully!")
+      toast.success("Account created successfully!")
     
     )
-    .catch((err) => alert(err))
+    .catch((err) => toast.error(err))
 
   }
 
