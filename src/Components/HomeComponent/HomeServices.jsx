@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Star, MapPin, Clock } from "lucide-react";
 import { FaBookOpen } from "react-icons/fa";
 import Loading from "../Loading";
+import { Link } from "react-router";
 
 const HomeServices = () => {
   const [services, setServices] = useState([]);
@@ -13,7 +14,7 @@ const HomeServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch("http://localhost:3000/services");
+        const response = await fetch("http://localhost:3000/top-rating");
         if (!response.ok) {
           throw new Error("Failed to fetch services");
         }
@@ -107,7 +108,7 @@ const HomeServices = () => {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Our Services
+            Our top rated services
           </h1>
           <p className="text-xl text-secondary max-w-2xl mx-auto">
             Discover professional home services from trusted providers in your
@@ -216,13 +217,12 @@ const HomeServices = () => {
           ))}
         </motion.div>
         <div className="flex items-center flex-col mt-15 justify-center">
-            <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            <Link
+            to='/services'
             className="btn-custom flex-1 text-center w-[40%]"
             >
                Visit All Services
-            </motion.button>
+            </Link>
         </div>
         {/* Empty State */}
         {services.length === 0 && (

@@ -48,3 +48,15 @@
 .btn-custom:active {
   background-color: #CBCBCB;
 }
+
+
+.active{
+  background-color: #777C6D;
+  color: white;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
