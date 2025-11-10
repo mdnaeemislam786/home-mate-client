@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Star, MapPin, Clock } from "lucide-react";
 import { FaBookOpen } from "react-icons/fa";
-import Loading from "../Components/Loading";
+import Loading from "../Loading";
 
-const Services = () => {
+const HomeServices = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -79,7 +79,7 @@ const Services = () => {
 
   if (loading) {
     return (
-        <Loading></Loading>
+      <Loading></Loading>
     );
   }
 
@@ -97,7 +97,7 @@ const Services = () => {
   }
 
   return (
-    <div className="min-h-screen bg-light py-12 px-4">
+    <div className=" bg-light py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div
@@ -107,7 +107,7 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Our All Services
+            Our Services
           </h1>
           <p className="text-xl text-secondary max-w-2xl mx-auto">
             Discover professional home services from trusted providers in your
@@ -215,7 +215,15 @@ const Services = () => {
             </motion.div>
           ))}
         </motion.div>
-
+        <div className="flex items-center flex-col mt-15 justify-center">
+            <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="btn-custom flex-1 text-center w-[40%]"
+            >
+               Visit All Services
+            </motion.button>
+        </div>
         {/* Empty State */}
         {services.length === 0 && (
           <motion.div
@@ -237,4 +245,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default HomeServices;
