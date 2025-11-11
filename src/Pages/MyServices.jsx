@@ -73,9 +73,9 @@ const MyServices = () => {
       alert("Error updating service: " + err.message);
     }
   };
-
   // Handle Delete Service
   const handleDeleteService = async (serviceId) => {
+    //   console.log(serviceId);
     try {
       const response = await fetch(
         `http://localhost:3000/services/${serviceId}`,
@@ -140,7 +140,7 @@ const MyServices = () => {
     );
   }
 
-  console.log(editingService);
+//   console.log(editingService);
   return (
     <div className="min-h-screen bg-light py-12 px-4">
       <div className="max-w-7xl mx-auto">

@@ -201,15 +201,7 @@ const HomeServices = () => {
                     whileTap={{ scale: 0.95 }}
                     className="btn-custom flex-1 text-center"
                   >
-                    Book Now
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-secondary text-primary font-semibold py-3 px-4 rounded-xl hover:bg-secondary/80 transition-colors flex items-center justify-center"
-                  >
-                    <FaBookOpen className="w-4 h-4 mr-2" />
-                    Viset
+                    Details
                   </motion.button>
                 </div>
               </div>
