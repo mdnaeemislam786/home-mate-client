@@ -1,19 +1,46 @@
 import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Star,
-  User,
-  Mail,
-  ArrowLeft,
-} from "lucide-react";
-import { Link, useLoaderData } from "react-router";
+import { Star, User, Mail, ArrowLeft } from "lucide-react";
+import { Link, Navigate, useLoaderData, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
+import { h1 } from "framer-motion/client";
+import { FaBookOpen, FaMailchimp } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const ServiceDetails = () => {
   const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
   const data = useLoaderData();
 
-  console.log(data);
+  // console.log(data);
+
+  // Options for formatting
+  const now = new Date();
+  const options = {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  };
+  const formatted = now.toLocaleString("en-US", options);
+  // console.log(formatted); // Output: "11 November 2025, 8:52 PM"
+
+  const bookingdata = {
+    userEmail: user.email,
+    category: data.category,
+    description: data.description,
+    providerEmail: data.email,
+    image: data.image,
+    price: data.price,
+    providerName: data.providerName,
+    rating: data.rating,
+    serviceName: data.serviceName,
+    bookingTime: formatted,
+  };
+
+  // console.log(bookingdata);
 
   const service = {
     _id: data._id,
@@ -28,15 +55,39 @@ const ServiceDetails = () => {
     userName: user.displayName,
     userEmail: user.email,
   };
-
   const [showAllReviews, setShowAllReviews] = useState(false);
+ 
+//============
+    const handleSubmit = () => {
+      // Simulate API call
+      try {
+        fetch("http://localhost:3000/booking", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookingdata),
+        })
+          .then(() => {
+            toast.success("Service added successfully!");
+            navigate('/my-bookings')
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+        console.log("Service data:", bookingdata);
+      } catch {
+        alert("Error adding service. Please try again.");
+      }
+    };
 
+//===========
   // reviews data
   const reviews = [
     {
       id: 1,
       userName: "Rahim Ahmed",
-      rating: 5,
+      rating: Math.ceil(service.rating),
       comment:
         "Excellent service! The electrician was professional and fixed our wiring issue quickly. Highly recommended!",
       date: "2024-01-15",
@@ -194,7 +245,7 @@ const ServiceDetails = () => {
             >
               Cancel
             </label>
-            <button className="btn-custom flex-1 order-1 sm:order-2">
+            <button onClick={handleSubmit} className="btn-custom flex-1 order-1 sm:order-2">
               Confirm Booking
             </button>
           </div>
@@ -443,52 +494,62 @@ const ServiceDetails = () => {
                 </button>
               )}
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {displayedReviews.map((review, index) => (
-                <motion.div
-                  key={review.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-light rounded-2xl p-6 border border-muted"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                        <User className="w-6 h-6 text-light" />
+            {reviews.length === 0 ? (
+              <div className=" flex flex-col justify-center items-center text-center p-5">
+                <span className=" text-5xl text-secondary">
+                  <FaBookOpen></FaBookOpen>
+                </span>
+                <h1 className="text-2xl font-bold">No reviews available</h1>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {displayedReviews.map((review, index) => (
+                  <motion.div
+                    key={review.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="bg-light rounded-2xl p-6 border border-muted"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                          <User className="w-6 h-6 text-light" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-primary">
+                            {review.userName}
+                          </h4>
+                          <div className="flex items-center gap-1">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star
+                                key={star}
+                                className={`w-4 h-4 ${
+                                  star <= review.rating
+                                    ? "text-yellow-400 fill-current"
+                                    : "text-gray-300"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-bold text-primary">
-                          {review.userName}
-                        </h4>
-                        <div className="flex items-center gap-1">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star
-                              key={star}
-                              className={`w-4 h-4 ${
-                                star <= review.rating
-                                  ? "text-yellow-400 fill-current"
-                                  : "text-gray-300"
-                              }`}
-                            />
-                          ))}
+                      <div className="text-right">
+                        <div className="text-secondary text-sm">
+                          {new Date(review.date).toLocaleDateString()}
+                        </div>
+                        <div className="text-primary text-sm font-semibold">
+                          {review.serviceUsed}
                         </div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-secondary text-sm">
-                        {new Date(review.date).toLocaleDateString()}
-                      </div>
-                      <div className="text-primary text-sm font-semibold">
-                        {review.serviceUsed}
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-muted leading-relaxed">{review.comment}</p>
-                </motion.div>
-              ))}
-            </div>
+                    <p className="text-muted leading-relaxed">
+                      {review.comment}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </motion.div>
       </div>

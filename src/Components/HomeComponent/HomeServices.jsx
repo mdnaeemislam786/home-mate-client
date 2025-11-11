@@ -195,15 +195,17 @@ const HomeServices = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="btn-custom flex-1 text-center"
-                  >
+                <Link to={`/services/${service._id}`}>
+                  <div className="flex gap-3">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="btn-custom flex-1 text-center"
+                    >
                     Details
-                  </motion.button>
-                </div>
+                    </motion.button>
+                  </div>
+                </Link>
               </div>
             </motion.div>
           ))}
