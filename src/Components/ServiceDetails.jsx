@@ -28,7 +28,7 @@ const ServiceDetails = () => {
   // console.log(formatted); // Output: "11 November 2025, 8:52 PM"
 
   const bookingdata = {
-    userEmail: user.email,
+    email: user.email,
     category: data.category,
     description: data.description,
     providerEmail: data.email,
