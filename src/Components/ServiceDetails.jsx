@@ -83,18 +83,21 @@ const ServiceDetails = () => {
   };
 
   //===========
-  // reviews data
-  const reviews = [
-    {
-      id: 1,
-      userName: "Rahim Ahmed",
-      rating: Math.ceil(service.rating),
-      comment:
-        "Excellent service! The electrician was professional and fixed our wiring issue quickly. Highly recommended!",
-      date: "2024-01-15",
-      serviceUsed: "Wiring Repair",
-    },
-  ];
+  // // reviews data
+  const reviews = data.review? data.review : []
+  // console.log(review);
+  // review.map
+  // const reviews = [
+  //   {
+  //     id: 1,
+  //     userName: "Rahim Ahmed",
+  //     rating: Math.ceil(service.rating),
+  //     comment:
+  //       "Excellent service! The electrician was professional and fixed our wiring issue quickly. Highly recommended!",
+  //     date: "2024-01-15",
+  //     serviceUsed: "Wiring Repair",
+  //   },
+  // ];
 
   const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 6);
 
@@ -509,7 +512,7 @@ const ServiceDetails = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {displayedReviews.map((review, index) => (
                   <motion.div
-                    key={review.id}
+                    key={review.comment}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -540,7 +543,7 @@ const ServiceDetails = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-secondary text-sm">
-                          {new Date(review.date).toLocaleDateString()}
+                          {review.date}
                         </div>
                         <div className="text-primary text-sm font-semibold">
                           {review.serviceUsed}
