@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const ServiceDetails = () => {
   const { user } = useContext(AuthContext);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const data = useLoaderData();
 
   // console.log(data);
@@ -38,6 +38,7 @@ const ServiceDetails = () => {
     rating: data.rating,
     serviceName: data.serviceName,
     bookingTime: formatted,
+    serviceID: data._id,
   };
 
   // console.log(bookingdata);
@@ -56,32 +57,32 @@ const ServiceDetails = () => {
     userEmail: user.email,
   };
   const [showAllReviews, setShowAllReviews] = useState(false);
- 
-//============
-    const handleSubmit = () => {
-      // Simulate API call
-      try {
-        fetch("http://localhost:3000/booking", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(bookingdata),
-        })
-          .then(() => {
-            toast.success("Service added successfully!");
-            navigate('/my-bookings')
-          })
-          .catch((err) => {
-            toast.error(err.message);
-          });
-        console.log("Service data:", bookingdata);
-      } catch {
-        alert("Error adding service. Please try again.");
-      }
-    };
 
-//===========
+  //============
+  const handleSubmit = () => {
+    // Simulate API call
+    try {
+      fetch("http://localhost:3000/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingdata),
+      })
+        .then(() => {
+          toast.success("Service added successfully!");
+          navigate("/my-bookings");
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
+      // console.log("Service data:", bookingdata);
+    } catch {
+      alert("Error adding service. Please try again.");
+    }
+  };
+
+  //===========
   // reviews data
   const reviews = [
     {
@@ -245,7 +246,10 @@ const ServiceDetails = () => {
             >
               Cancel
             </label>
-            <button onClick={handleSubmit} className="btn-custom flex-1 order-1 sm:order-2">
+            <button
+              onClick={handleSubmit}
+              className="btn-custom flex-1 order-1 sm:order-2"
+            >
               Confirm Booking
             </button>
           </div>

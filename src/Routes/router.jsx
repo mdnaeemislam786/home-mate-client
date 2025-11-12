@@ -14,58 +14,82 @@ import PrivateRoute from "./PrivateRoute";
 import ServiceDetails from "../Components/ServiceDetails";
 
 export const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <MainLayout/>,
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/services",
+        element: <Services />,
+      },
+      {
+        path: "/services/:id",
+        element: (
+          <PrivateRoute>
+            <ServiceDetails />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/services/${params.id}`),
+      },
+      {
+        path: "/my-services",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <MyServices />{" "}
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/add-service",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AddServices />{" "}
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-bookings",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <MyBookings />{" "}
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <Profile />{" "}
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/auth",
+        element: <AuthLayout />,
         children: [
-            {
-                index: true, 
-                element: <Home/>
-            },
-            {
-                path: '/services',
-                element: <Services/>
-            },
-            {
-                path: '/services/:id',
-                element: <PrivateRoute><ServiceDetails/></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:3000/services/${params.id}`)
-            },
-            {
-                path: '/my-services',
-                element: <PrivateRoute> <MyServices/> </PrivateRoute> 
-            },
-            {
-                path: '/add-service',
-                element: <PrivateRoute> <AddServices/> </PrivateRoute> 
-            },
-            {
-                path: '/my-bookings',
-                element: <PrivateRoute> <MyBookings/> </PrivateRoute> 
-            },
-            {
-                path: '/profile',
-                element: <PrivateRoute> <Profile/> </PrivateRoute>
-            },
-            {
-                path: '/auth',
-                element: <AuthLayout/>,
-                children:[
-                    {
-                        path: '/auth',
-                        element: <Login/>
-                    },
-                    {
-                        path: '/auth/register',
-                        element: <Register/>
-                    },
-                    {
-                        path: '/auth/forgot',
-                        element: <Forgot/>
-                    },
-                ]
-            },
-
-        ]
-    }
-])
+          {
+            path: "/auth",
+            element: <Login />,
+          },
+          {
+            path: "/auth/register",
+            element: <Register />,
+          },
+          {
+            path: "/auth/forgot",
+            element: <Forgot />,
+          },
+        ],
+      },
+    ],
+  },
+]);

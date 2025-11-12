@@ -140,7 +140,7 @@ const MyServices = () => {
     );
   }
 
-//   console.log(editingService);
+  //   console.log(editingService);
   return (
     <div className="min-h-screen bg-light py-12 px-4">
       <div className="max-w-7xl mx-auto">

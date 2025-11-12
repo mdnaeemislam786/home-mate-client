@@ -79,9 +79,7 @@ const Services = () => {
   };
 
   if (loading) {
-    return (
-        <Loading></Loading>
-    );
+    return <Loading></Loading>;
   }
 
   if (error) {
@@ -202,7 +200,7 @@ const Services = () => {
                       whileTap={{ scale: 0.95 }}
                       className="btn-custom flex-1 text-center"
                     >
-                    Details
+                      Details
                     </motion.button>
                   </div>
                 </Link>

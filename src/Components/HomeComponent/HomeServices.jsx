@@ -79,9 +79,7 @@ const HomeServices = () => {
   };
 
   if (loading) {
-    return (
-      <Loading></Loading>
-    );
+    return <Loading></Loading>;
   }
 
   if (error) {
@@ -202,7 +200,7 @@ const HomeServices = () => {
                       whileTap={{ scale: 0.95 }}
                       className="btn-custom flex-1 text-center"
                     >
-                    Details
+                      Details
                     </motion.button>
                   </div>
                 </Link>
@@ -211,12 +209,12 @@ const HomeServices = () => {
           ))}
         </motion.div>
         <div className="flex items-center flex-col mt-15 justify-center">
-            <Link
-            to='/services'
+          <Link
+            to="/services"
             className="btn-custom flex-1 text-center w-[40%]"
-            >
-               Visit All Services
-            </Link>
+          >
+            Visit All Services
+          </Link>
         </div>
         {/* Empty State */}
         {services.length === 0 && (
