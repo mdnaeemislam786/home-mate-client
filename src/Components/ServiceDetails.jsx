@@ -60,10 +60,11 @@ const ServiceDetails = () => {
 
   //============
   const handleSubmit = () => {
-    if(service.email === user.email) return toast.error("You can't booked your own services")
+    if (service.email === user.email)
+      return toast.error("You can't booked your own services");
     // Simulate API call
     try {
-      fetch("http://localhost:3000/booking", {
+      fetch("https://home-mate-server.vercel.app/booking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,14 +80,12 @@ const ServiceDetails = () => {
         });
       // console.log("Service data:", bookingdata);
     } catch {
-      alert("Error adding service. Please try again.");
+      toast("Error adding service. Please try again.");
     }
   };
 
-
   // // reviews data
-  const reviews = data.review? data.review : []
-
+  const reviews = data.review ? data.review : [];
 
   const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 6);
 

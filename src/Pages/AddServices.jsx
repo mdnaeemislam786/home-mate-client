@@ -38,7 +38,7 @@ const AddServices = () => {
     const { name, value } = e.target;
     // Convert price to number, keep other fields as string
     const processedValue = name === "price" ? parseFloat(value) || 0 : value;
-    
+
     setFormData((prev) => ({
       ...prev,
       [name]: processedValue,
@@ -108,7 +108,7 @@ const AddServices = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      fetch("http://localhost:3000/services", {
+      fetch("https://home-mate-server.vercel.app/services", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,7 +122,7 @@ const AddServices = () => {
           toast.error(err.message);
         });
       // Here you would typically send the data to your backend
-      console.log("Service data:", formData);
+      // console.log("Service data:", formData);
 
       // Reset form
       setFormData({
@@ -137,7 +137,7 @@ const AddServices = () => {
       setImagePreview("");
       setErrors({});
     } catch (error) {
-      alert("Error adding service. Please try again.");
+      toast.error("Error adding service. Please try again. " + error);
     } finally {
       setIsSubmitting(false);
     }

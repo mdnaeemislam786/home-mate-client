@@ -5,6 +5,7 @@ import { Star, MapPin, Clock, Edit, Trash2, Eye, Plus } from "lucide-react";
 import { Link } from "react-router";
 import Loading from "../Components/Loading";
 import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 
 const MyServices = () => {
   const { user } = useContext(AuthContext);
@@ -19,13 +20,16 @@ const MyServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch("http://localhost:3000/my-booking", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        });
+        const response = await fetch(
+          "https://home-mate-server.vercel.app/my-booking",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch services");
@@ -46,7 +50,7 @@ const MyServices = () => {
   const handleUpdateService = async (serviceId, updatedData) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/services/${serviceId}`,
+        `https://home-mate-server.vercel.app/services/${serviceId}`,
         {
           method: "PATCH",
           headers: {
@@ -68,9 +72,9 @@ const MyServices = () => {
       );
 
       setEditingService(null);
-      alert("Service updated successfully!");
+      toast.success("Service updated successfully!");
     } catch (err) {
-      alert("Error updating service: " + err.message);
+      toast.error("Error updating service: " + err.message);
     }
   };
   // Handle Delete Service
@@ -78,7 +82,7 @@ const MyServices = () => {
     //   console.log(serviceId);
     try {
       const response = await fetch(
-        `http://localhost:3000/services/${serviceId}`,
+        `https://home-mate-server.vercel.app/services/${serviceId}`,
         {
           method: "DELETE",
         }
@@ -93,9 +97,9 @@ const MyServices = () => {
         prev.filter((service) => service._id !== serviceId)
       );
       setShowDeleteConfirm(null);
-      alert("Service deleted successfully!");
+      toast.success("Service deleted successfully!");
     } catch (err) {
-      alert("Error deleting service: " + err.message);
+      toast.error("Error deleting service: " + err.message);
     }
   };
 

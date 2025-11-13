@@ -74,7 +74,7 @@ const Register = () => {
     const photoURL = formData.photoURL;
     const displayName = formData.firstName +" "+ formData.lastName;
 
-    console.log(email, password, photoURL, displayName);
+    // console.log(email, password, photoURL, displayName);
     createUser(email, password, photoURL, displayName)
     .then(() =>{
       toast.success("Account created successfully!")

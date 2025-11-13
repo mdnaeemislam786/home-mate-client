@@ -14,7 +14,7 @@ const HomeServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch("http://localhost:3000/top-rating");
+        const response = await fetch("https://home-mate-server.vercel.app/top-rating");
         if (!response.ok) {
           throw new Error("Failed to fetch services");
         }

@@ -20,11 +20,14 @@ const MyBookings = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch("http://localhost:3000/my-booked", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        });
+        const response = await fetch(
+          "https://home-mate-server.vercel.app/my-booked",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to fetch services");
         const data = await response.json();
@@ -39,10 +42,11 @@ const MyBookings = () => {
 
   // Delete booking
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this booking?")) return;
+    if (!window.confirm("Are you sure you want to delete this booking?"))
+      return;
 
     try {
-      await fetch(`http://localhost:3000/bookings/${id}`, {
+      await fetch(`https://home-mate-server.vercel.app/bookings/${id}`, {
         method: "DELETE",
       });
       setBooked(booked.filter((item) => item._id !== id));
@@ -57,7 +61,7 @@ const MyBookings = () => {
     srID.current = serviceID;
     setShowReview(bookingId);
     // Find the current booking for review
-    const booking = booked.find(item => item._id === bookingId);
+    const booking = booked.find((item) => item._id === bookingId);
     setCurrentBooking(booking);
   };
 
@@ -95,7 +99,7 @@ const MyBookings = () => {
       // console.log(reviewData);
 
       // Send review to backend
-      await fetch(`http://localhost:3000/bookings/review`, {
+      await fetch(`https://home-mate-server.vercel.app/bookings/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reviewData),
@@ -106,7 +110,7 @@ const MyBookings = () => {
       setReview({ rating: 5, comment: "" });
       setCurrentBooking(null);
     } catch (err) {
-      toast.error("Failed to submit review . "+ err );
+      toast.error("Failed to submit review . " + err);
     }
   };
 
@@ -195,7 +199,9 @@ const MyBookings = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => openReviewModal(booking._id, booking.serviceID)}
+                      onClick={() =>
+                        openReviewModal(booking._id, booking.serviceID)
+                      }
                       className="bg-secondary text-primary p-2 rounded-xl hover:bg-secondary/80 transition-colors"
                       title="Add Review"
                     >

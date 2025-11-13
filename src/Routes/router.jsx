@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/services/${params.id}`),
+          fetch(`https://home-mate-server.vercel.app/services/${params.id}`),
       },
       {
         path: "/my-services",
@@ -93,8 +93,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <ErrorPage></ErrorPage>
-      }
+        element: <ErrorPage></ErrorPage>,
+      },
     ],
   },
 ]);

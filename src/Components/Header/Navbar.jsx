@@ -3,11 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
+import { HiMenu } from "react-icons/hi";
 
 const Navbar = () => {
   const { user, logoutUser } = useContext(AuthContext);
 
-  console.log(user);
+  // console.log(user);
     const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -71,20 +72,10 @@ const Navbar = () => {
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
+              <HiMenu
                 className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
+              </HiMenu>
             </div>
             <ul
               tabIndex={0}
@@ -94,7 +85,7 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
-            <img src="/logo.png" alt="Logo" className="w-8 h-8 mr-2" />
+            <img src="/logo.png" alt="Logo" className="w-8 h-8 mr-0 sm:mr-2" />
             HomeMate
           </Link>
         </div>
@@ -199,7 +190,7 @@ const Navbar = () => {
               <Link to="/auth" className="btn btn-primary btn-sm">
                 Login
               </Link>
-              <Link to="/auth/register" className="btn btn-outline btn-sm">
+              <Link to="/auth/register" className="btn btn-outline hidden sm:flex btn-sm">
                 Register
               </Link>
             </div>
