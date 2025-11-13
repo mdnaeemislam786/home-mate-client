@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  const location = useLocation()
   const navigate = useNavigate();
   const {userLogin , googleSignIn } = useContext(AuthContext)
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ const Login = () => {
     userLogin(email, password)
     .then(() => {
       toast.success('Login Successfull!')
-      navigate('/')
+      navigate(location.state || "/")
     })
     .catch(err => toast.error(err))
   };
@@ -47,11 +48,11 @@ const Login = () => {
   const handleGoogleSignIn = () =>{
     googleSignIn() 
     .then(() =>
-      toast.success("Account created successfully!")
+      toast.success("Login successfully!")
     
     )
     .catch((err) => toast.error(err))
-
+    navigate(location.state || "/")
   }
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);

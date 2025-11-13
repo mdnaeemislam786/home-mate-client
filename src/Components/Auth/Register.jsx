@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 
 const Register = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const { createUser , googleSignIn } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -44,7 +47,7 @@ const Register = () => {
       hasUpper: /[A-Z]/.test(password),
       hasLower: /[a-z]/.test(password),
       hasNumber: /[0-9]/.test(password),
-      hasMinLength: password.length >= 8,
+      hasMinLength: password.length >= 6,
     });
   };
 
@@ -69,26 +72,28 @@ const Register = () => {
     const email = formData.email;
     const password = formData.password;
     const photoURL = formData.photoURL;
-    const displayName = formData.firstName + formData.lastName;
+    const displayName = formData.firstName +" "+ formData.lastName;
 
     console.log(email, password, photoURL, displayName);
     createUser(email, password, photoURL, displayName)
-    .then(() =>
+    .then(() =>{
       toast.success("Account created successfully!")
-    )
-    .catch((err) => toast.error(err))
+      navigate(location.state || "/")
+    }
 
+    )
+    .catch((err) => toast.error(err.message))
   };
 
   //google signin
   const handleGoogleSignIn = () =>{
     googleSignIn() 
-    .then(() =>
-      toast.success("Account created successfully!")
-    
+    .then(() =>{
+      toast.success("Account created successfully!"),
+      navigate(location.state || "/")
+    }
     )
-    .catch((err) => toast.error(err))
-
+    .catch((err) => toast.error(err.message))
   }
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
@@ -246,7 +251,7 @@ const Register = () => {
                             : "text-red-600"
                         }`}
                       >
-                        {passwordStrength.hasMinLength ? "✓" : "✗"} 8+
+                        {passwordStrength.hasMinLength ? "✓" : "✗"} 6+
                         characters
                       </div>
                     </div>

@@ -60,6 +60,7 @@ const ServiceDetails = () => {
 
   //============
   const handleSubmit = () => {
+    if(service.email === user.email) return toast.error("You can't booked your own services")
     // Simulate API call
     try {
       fetch("http://localhost:3000/booking", {
@@ -82,22 +83,10 @@ const ServiceDetails = () => {
     }
   };
 
-  //===========
+
   // // reviews data
   const reviews = data.review? data.review : []
-  // console.log(review);
-  // review.map
-  // const reviews = [
-  //   {
-  //     id: 1,
-  //     userName: "Rahim Ahmed",
-  //     rating: Math.ceil(service.rating),
-  //     comment:
-  //       "Excellent service! The electrician was professional and fixed our wiring issue quickly. Highly recommended!",
-  //     date: "2024-01-15",
-  //     serviceUsed: "Wiring Repair",
-  //   },
-  // ];
+
 
   const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 6);
 
