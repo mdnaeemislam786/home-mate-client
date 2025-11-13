@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Star, MapPin, Clock } from "lucide-react";
-import { FaBookOpen } from "react-icons/fa";
+import { FaBookOpen, FaSearch } from "react-icons/fa";
 import Loading from "../Components/Loading";
 import { Link } from "react-router";
+import { FaFilter } from "react-icons/fa6";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -26,9 +27,57 @@ const Services = () => {
         setLoading(false);
       }
     };
-
     fetchServices();
   }, []);
+
+  const handleSearchResults = async (event) => {
+    // event.preventDefault();
+    const query = event.target.search.value;
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:3000/services/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query }),
+      });
+
+      if (!response.ok) throw new Error("Search failed");
+
+      const data = await response.json();
+      setServices(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+const handlePriceFilter = async (min, max) => {
+  setLoading(true);
+  try {
+    const response = await fetch("http://localhost:3000/services/filter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ min, max }),
+    });
+
+    if (!response.ok) throw new Error("Filter failed");
+
+    const data = await response.json();
+    setServices(data); // ✅ filtered result set করো
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
+
+
 
   // Animation variants
   const containerVariants = {
@@ -103,7 +152,7 @@ const Services = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 flex flex-col items-center justify-between "
         >
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Our All Services
@@ -112,6 +161,53 @@ const Services = () => {
             Discover professional home services from trusted providers in your
             area
           </p>
+          <div className="flex flex-col sm:flex-row gap-4 items-center mt-5">
+            {/* Search Input with Icon */}
+            <div className="flex-1 w-full sm:max-w-md">
+              <form onSubmit={handleSearchResults} className="relative">
+                <FaSearch className=" absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary"></FaSearch>
+                <input 
+                  name="search"
+                  type="text" 
+                  placeholder="Search for services..."
+                  className="w-full bg-light border border-muted rounded-2xl pl-12 pr-24 py-3 text-primary focus:outline-none focus:border-primary transition-colors"
+                />
+                <button 
+                 className="btn-custom absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 text-sm">
+                  Search
+                </button>
+              </form>
+            </div>
+
+            {/* Filter Dropdown with Icon */}
+            <div className="w-full sm:w-auto">
+              <details className="dropdown">
+                <summary className="bg-secondary text-primary font-semibold py-3 px-6 rounded-2xl hover:bg-secondary/80 transition-colors cursor-pointer list-none flex items-center gap-2">
+                <FaFilter></FaFilter>
+                  Filter
+                </summary>
+                  <ul
+                      tabIndex="-1"
+                      className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                      <li className="text-primary font-semibold underline">Filter by price</li>
+                      <li>
+                        <button onClick={() => handlePriceFilter(0, 50)}>
+                          Filter $0–$50
+                        </button>
+                        <button onClick={() => handlePriceFilter(50, 100)}>
+                          Filter $50–$100
+                        </button>
+                        <button onClick={() => handlePriceFilter(100, 500)}>
+                          Filter $100–$500
+                        </button>
+                        <button onClick={() => handlePriceFilter(500, 10000)}>
+                          Filter $500–$10000
+                        </button>
+                      </li>
+                  </ul>
+              </details>
+            </div>
+          </div>
         </motion.div>
 
         {/* Services Grid */}

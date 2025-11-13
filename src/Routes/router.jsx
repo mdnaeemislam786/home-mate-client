@@ -12,6 +12,7 @@ import Register from "../Components/Auth/Register";
 import Forgot from "../Components/Auth/Forgot";
 import PrivateRoute from "./PrivateRoute";
 import ServiceDetails from "../Components/ServiceDetails";
+import ErrorPage from "../Components/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "*",
+        element: <ErrorPage></ErrorPage>
+      }
     ],
   },
 ]);

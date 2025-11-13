@@ -36,9 +36,12 @@ const AddServices = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // Convert price to number, keep other fields as string
+    const processedValue = name === "price" ? parseFloat(value) || 0 : value;
+    
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: processedValue,
     }));
 
     // Clear error when user starts typing
@@ -48,7 +51,6 @@ const AddServices = () => {
         [name]: "",
       }));
     }
-
     // Handle image preview
     if (name === "image" && value) {
       setImagePreview(value);
